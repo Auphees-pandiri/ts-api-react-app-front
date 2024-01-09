@@ -1,0 +1,1159 @@
+{
+  "openapi" : "3.0.0",
+  "servers" : [ {
+    "description" : "SwaggerHub API Auto Mocking",
+    "url" : "https://virtserver.swaggerhub.com/APHEESPANDIRI123/abcd/1.0.0"
+  }, {
+    "description" : "SwaggerHub API Auto Mocking",
+    "url" : "https://virtserver.swaggerhub.com/AUPHEESUPANDIRI/Tigersheet/1.0.0"
+  }, {
+    "description" : "Tigersheet API",
+    "url" : "https://tigersheet.swaggerhub.com"
+  } ],
+  "info" : {
+    "description" : "\n### Introduction\nTigersheet APIs will empower developers and users to perform essential actions such as creating, updating, deleting, and viewing records in sheets.\n\n\n\nThese APIs serve as the backbone of your application's data management system, allowing for efficient and secure manipulation of information within Tigersheet sheets. Whether you are looking to add new records, modify existing data, remove outdated entries, or retrieve valuable insights, our Sheet Management APIs provide a comprehensive solution.\n\nTo access our APIs, simply use your designated domain name in the API endpoint URL. So, if your domain name is **\"example\"** the base URL will look like below.\n\n##### Base URL\n\n```\nhttps://example.tigersheet.com/api/sheet-api\n```\n\n**How to Access:**\n\n\nTo interact with the APIs, construct the URL using your domain name, followed by the desired endpoint. For example, we provide an endpoint like **\"get-records\"** to retrive records from a sheet.\n\n##### Example\n\n```\nhttps://example.tigersheet.com/api/sheet-api/get-records\n```\n\n\n\n### Authentication\n\nTo ensure secure access to our APIs, users are required to authenticate using API key. To authenticate your requests, follow these below steps:\n\n**Generate API Key:**\n\n- Visit your respective Tigersheet account at `https://<domain>.tigersheet.com`.\n- Open the API Keys panel under User Account settings located at the top of the page.\n- If you are an admin user of your domain, you can directly create your API key.\n- If you are a non admin user, you can request the admin for an API key and they can approve it.\n\n**Include API Key in Requests:**\n\nOnce you've generated your API key, include it in the Authorization header of your API requests.\n\n**API Endpoint Structure:**\n\nPlease find the below API endpoint structure along with the usage of API key. We have considered get-records endpoint for this example\n\n```\nPOST /api/sheet-api/get-records\nHost: https://<domain>.tigersheet.com\nAuthorization: your_generated_api_key\n```\n\n\n\n\nNow, you can easily perform various operations on your sheets using the endpoints which we mentioned below. \n\n**Note:**\n\n- Make sure that you replace \"example\" in the base URL with your corresponding domain assigned to you.\n- Ensure your API key is included in the Authorization header for every API request.\n",
+    "version" : "1.0.0",
+    "title" : "Tigersheet API's",
+    "contact" : {
+      "email" : "aupheesu.pandiri@riktamtech.com"
+    },
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "security" : [ {
+    "ApiKeyAuth" : [ ]
+  } ],
+  "tags" : [ {
+    "name" : "/api/sheet-api",
+    "description" : "sheet level actions"
+  } ],
+  "paths" : {
+    "/get-records" : {
+      "post" : {
+        "tags" : [ "/api/sheet-api" ],
+        "summary" : "retrieves records in a sheet",
+        "security" : [ {
+          "ApiKeyAuth" : [ ]
+        } ],
+        "operationId" : "getRecords",
+        "description" : "Retrieves records from a sheet, allowing users to specify additional features such as limit, sort and criteria for customized data retrieval.",
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "multipart/form-data" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "sheet_id" : {
+                    "type" : "integer",
+                    "description" : "Id of the sheet\n\n##### Example:\n\n\n```\n70140867\n```\n",
+                    "default" : 70140867
+                  },
+                  "criteria" : {
+                    "type" : "string",
+                    "description" : "Filter the records based on condition.\n\n##### Notation\n\nFor every sheet, there will be a sheet Id and for every column in a sheet there will be a columnId. Use the following notation to filter records:\n\n```\nsheet_{sheetId}.column_{columnId} = value\n```\n\n##### Example:\n```\nsheet_70140867.column_240 = 'kiran'\n```\n\n### Criteria for different column types\n\nBelow we have listed down some criteria conditions for text, number and date type columns.\n\n70140867 is the sheet Id\n\n240 is a text column Id.\n\n244 is a number column Id.\n\n249 is date column Id\n\n\n##### Text\n\n- **Equal to:** `sheet_70140867.column_240 = 'kiran'`\n- **Not equal to:** `sheet_70140867.column_240 <> 'kiran'`\n- **Contains:** `sheet_70140867.column_240 LIKE '%kiran%'`\n- **Does not contain:** `sheet_70140867.column_240 NOT LIKE '%kiran%'`\n- **Starts with:** `sheet_70140867.column_240 LIKE 'kiran%'`\n- **Ends with:** `sheet_70140867.column_240 LIKE '%kiran'`\n- **Is empty:** `sheet_70140867.column_240 IS EMPTY`\n- **Is not empty:** `sheet_70140867.column_240 IS NOT EMPTY`\n\n##### Number\n\n- **Equal to:** `sheet_70140867.column_244 = 20`\n- **Not equal to:** `sheet_70140867.column_244 <> 20`\n- **Greater than:** `sheet_70140867.column_244 > 20`\n- **Less than:** `sheet_70140867.column_244 < 20`\n- **Greater than or equal:** `sheet_70140867.column_244 >= 20`\n- **Less than or equal:** `sheet_70140867.column_244 <= 20`\n- **Range:** `sheet_70140867.column_244 >= 20 and sheet_70140867.column_244 <= 30`\n\n##### Date\n\n- **Equal to:** `DATE(sheet_70140867.column_249) = '2023-12-20'`\n- **Not equal to:** `DATE(sheet_70140867.column_249) <> '2023-12-20'`\n- **Greater than:** `DATE(sheet_70140867.column_249) > '2023-12-20'`\n- **Less than:** `DATE(sheet_70140867.column_249) < '2023-12-20'`\n- **Greater than or equal:** `DATE(sheet_70140867.column_249) >= '2023-12-20'`\n- **Less than or equal:** `DATE(sheet_70140867.column_249) <= '2023-12-20'`\n- **Today:** `DATE(sheet_70140867.column_249) = CURDATE()`\n- **Tomorrow:** `DATE(sheet_70140867.column_249) = DATE_ADD(CURDATE(),INTERVAL 1 DAY)`\n- **Yesterday:** `DATE(sheet_70140867.column_249) = DATE_SUB(CURDATE() , INTERVAL 1 DAY)`\n- **Last seven days:** `(DATE(sheet_70140867.column_249) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY) AND DATE(sheet_70140867.column_249) <= CURDATE())`\n- **This month:** `(MONTH(sheet_70140867.column_249) = MONTH(CURDATE()) AND   YEAR(sheet_70140867.column_249) = YEAR(CURDATE()))`\n- **This year:** `YEAR(sheet_70140867.column_249) = YEAR(CURDATE())`\n- **This quarter:** `(QUARTER(sheet_70140867.column_249) = QUARTER(CURDATE()) AND YEAR(sheet_70140867.column_249) = YEAR(CURDATE()))`\n- **In the past:** `sheet_70140867.column_249 < NOW()`\n- **In the future:** `sheet_70140867.column_249 > NOW()`\n",
+                    "default" : "sheet_70140867.column_240 ='kiran'"
+                  },
+                  "limit" : {
+                    "type" : "integer",
+                    "description" : "Number of records to fetch. Default would be 1000 if you don't mention.\n\n##### Example:\n\n\n```\n1\n```\n",
+                    "default" : 1
+                  },
+                  "sort" : {
+                    "type" : "array",
+                    "items" : {
+                      "type" : "object",
+                      "properties" : {
+                        "property" : {
+                          "type" : "string"
+                        },
+                        "direction" : {
+                          "type" : "string",
+                          "enum" : [ "asc", "desc" ]
+                        }
+                      }
+                    },
+                    "example" : "[{\"property\":\"column_240\",\"direction\":\"asc\"}, {\"property\" : \"column_241\", \"direction\": \"desc\"}]",
+                    "description" : "Sort the records in ascending or descending order. You can apply sort based on a columnId. So you need to mention the columnId for the property.\n\n##### Example:\n```\n[{\"property\":\"column_240\",\"direction\":\"asc\"}, {\"property\" : \"column_241\", \"direction\": \"desc\"}]\n```\n",
+                    "default" : [ {
+                      "property" : "column_240",
+                      "direction" : "asc"
+                    }, {
+                      "property" : "column_241",
+                      "direction" : "desc"
+                    } ]
+                  },
+                  "showFields" : {
+                    "type" : "string",
+                    "description" : "You can keep the specific columns data in the response. Default value will be 0 if you want all columns data. If you need specific columns data, you can mention the columnId's separated by comma.\n\n\n##### Example:\n\n\n```\ncolumn_240, column_241\n```\n",
+                    "default" : "column_240, column_241"
+                  }
+                },
+                "required" : [ "sheet_id" ]
+              },
+              "encoding" : {
+                "sort" : {
+                  "contentType" : "text/plain"
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "records data",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "success" : {
+                      "type" : "boolean",
+                      "example" : true
+                    },
+                    "data" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "name" : {
+                            "type" : "string",
+                            "example" : "kiran"
+                          },
+                          "age" : {
+                            "type" : "string",
+                            "example" : 20
+                          },
+                          "record_id" : {
+                            "type" : "integer",
+                            "example" : 1
+                          },
+                          "created_at" : {
+                            "type" : "string",
+                            "example" : "2023-11-16 06:09:53"
+                          },
+                          "updated_at" : {
+                            "type" : "string",
+                            "example" : "2023-11-16 06:09:53"
+                          },
+                          "comments_count" : {
+                            "type" : "integer",
+                            "example" : 0
+                          }
+                        }
+                      }
+                    },
+                    "totalCount" : {
+                      "type" : "string",
+                      "example" : 1
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
+          },
+          "401" : {
+            "description" : "Unauthorized access."
+          },
+          "500" : {
+            "description" : "Internal server error."
+          }
+        }
+      }
+    },
+    "/fetch-record" : {
+      "post" : {
+        "tags" : [ "/api/sheet-api" ],
+        "summary" : "retrives a single record data",
+        "security" : [ {
+          "ApiKeyAuth" : [ ]
+        } ],
+        "operationId" : "fetchRecord",
+        "description" : "You can retrieve a single record information from any sheet by passing the sheet Id, and record Id.\n",
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "multipart/form-data" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "sheet_id" : {
+                    "type" : "integer",
+                    "description" : "Id of the sheet.\n\n##### Example:\n\n\n```\n70140867\n```\n",
+                    "default" : 70140867
+                  },
+                  "record_id" : {
+                    "type" : "integer",
+                    "description" : "Id of the record in that sheet.\n\n##### Example:\n\n\n```\n1\n```\n",
+                    "default" : 1
+                  }
+                },
+                "required" : [ "sheet_id", "record_id" ]
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Record data",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "success" : {
+                      "type" : "boolean",
+                      "example" : true
+                    },
+                    "data" : {
+                      "type" : "object",
+                      "properties" : {
+                        "name" : {
+                          "type" : "string",
+                          "example" : "kiran"
+                        },
+                        "age" : {
+                          "type" : "string",
+                          "example" : 20
+                        },
+                        "record_id" : {
+                          "type" : "integer",
+                          "example" : 1
+                        },
+                        "created_at" : {
+                          "type" : "string",
+                          "example" : "2023-11-16 06:09:53"
+                        },
+                        "updated_at" : {
+                          "type" : "string",
+                          "example" : "2023-11-16 06:09:53"
+                        },
+                        "comments_count" : {
+                          "type" : "integer",
+                          "example" : 0
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
+          },
+          "401" : {
+            "description" : "Unauthorized access."
+          },
+          "500" : {
+            "description" : "Internal server error."
+          }
+        }
+      }
+    },
+    "/create-record" : {
+      "post" : {
+        "tags" : [ "/api/sheet-api" ],
+        "summary" : "creates a new record in a sheet",
+        "security" : [ {
+          "ApiKeyAuth" : [ ]
+        } ],
+        "operationId" : "createRecord",
+        "description" : "Enables users to add new records to a specified sheet by passing sheet Id and the record data.\n",
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/x-www-form-urlencoded" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "sheet_id" : {
+                    "type" : "integer",
+                    "description" : "Id of the sheet\n\n##### Example:\n\n\n```\n70140867\n```\n",
+                    "default" : 70140867
+                  },
+                  "data" : {
+                    "type" : "object",
+                    "additionalProperties" : {
+                      "type" : "object",
+                      "properties" : {
+                        "value" : {
+                          "type" : "string"
+                        }
+                      }
+                    },
+                    "example" : {
+                      "240" : {
+                        "value" : "Raj"
+                      },
+                      "241" : {
+                        "value" : "Raj@gmail.com"
+                      }
+                    },
+                    "description" : "The `data` object contains the record data. You can include the required columns data in the below format and you can send the data. \n\n##### Example:\n\nIn the below example, 240 represents a text column and 241 represents an email column.\n\n```\n  {\n    \"240\": {\n      \"value\": \"Raj\"\n    },\n    \"241\": {\n      \"value\": \"Raj@gmail.com\"\n    }\n  }\n```\n\n  \n### Data for different column types\n\nPlease find the below notation to send the data to **create record** for all type of columns.\n\n- **File:** While sending the data for a file column, first you need to upload the files using our **file-upload** API. You can upload one or more files through this API. In the response, you will get the files information. **For every file in the response, you need to add filepath as uploaded_name and fullpath as path, which means `file.filepath = file.uploaded_name` and `file.fullpath = file.path`.**  You can use the modified response of this API to send the data to file column. You can insert an array of files in a file column. In the below example we are sending a single file in a stringified JSON array to the file column and you can notice that we have added filepath and fullpath at the end to the file data.\n- **Lookup:** While sending the data for a lookup column, you need to mention the record id of the value which is in the source sheet. You can mention this record id under reference_column_id. You can use **get-lookup-options** API to fetch the options of the lookup column. In the response of this API you will get the options along with the record id's. You can use that in the below format to send data for lookup column. In the below example we are sending the value as kiran along with the record of it in source sheet for lookup column (271). \n- **Subsheet:** While creating a record in a sheet, you can also create one or more records into subsheet. While sending the data for a subsheet, you need to send an array of subsheet records. You can mention the corresponding subsheet columns data for every record along with a record id as shown in below example. You can get the subsheet columns information along with sub_sheet_id through **get-sheet-columns** API. You need to mention the sub_sheet_id in the data as shown in below example.\n\n\n\n\n ```json\n  {\n    \"240\": {                    (text)\n      \"value\": \"Raj\" \n    },\n    \"241\": {                    (email)\n      \"value\": \"Raj@gmail.com\" \n    },\n    \"242\": {                    (multiline/textarea)\n      \"value\": \"Raj\\n is\\n a good boy\" \n    },\n    \"243\": {                    (phone)\n      \"value\": 9874563210 \n    },\n    \"244\": {                    (number)\n      \"value\": 78 \n    },\n    \"245\": {                    (currency)\n      \"value\": 78 \n    },\n    \"246\": {                    (percentage)\n      \"value\": 42 \n    },\n    \"247\": {                    (boolean)\n      \"value\": true \n    },\n    \"249\": {                    (date)\n      \"value\": \"11/26/2023\" \n    },\n    \"250\": {                    (date time)\n      \"value\": \"11/26/2023 06:30:00\" \n    },\n    \"251\": {                    (dropdown)          \n      \"value\": \"open\" \n    },\n    \"252\": {                    (checkbox)\n      \"value\": \"abc, def\" \n    },\n    \"253\": {                    (multiselect)\n      \"value\": \"abc, def\" \n    },\n    \"255\": {                    (file)\n      \"value\": \"[{\\\"name\\\":\\\"IMG-20230910-WA0000.jpg\\\",\\\"uploaded_name\\\":\\\"742376591699564**************.jpg\\\",\\\"path\\\":\\\"http://t**********.s3.amazonaws.com/742376591699564**********.jpg\\\",\\\"size\\\":\\\"2114707\\\",\\\"status\\\":\\\"uploaded\\\",\\\"filepath\\\":\\\"742376591699564**************.jpg\\\",\\\"fullpath\\\":\\\"http://t**********.s3.amazonaws.com/742376591699564**********.jpg\\\"}]\"\n    },\n    \"256\": {                    (barcode)\n      \"value\": \"pqrs\" \n    },\n    \"271\": {                    (lookup)\n      \"value\":\"{\\\"reference_column_id\\\":1,\\\"value\\\":\\\"kiran\\\"}\" \n    },\n    \"274\": {                    (subsheet)\n      \"value\": [\n        {\n          \"273\": {              (text column inside subsheet)\n            \"value\": \"kumar\", \n            \"record_id\": -1\n          },\n          \"275\": {              (email column inside subsheet)\n            \"value\": \"kumar@gmail.com\",\n            \"record_id\": -1\n          }\n        },\n        {                       \n          \"273\": {              (text column inside subsheet)\n            \"value\": \"rao\",\n            \"record_id\": -2\n          },\n          \"275\": {              (email column inside subsheet)\n            \"value\": \"rao@gmail.com\",\n            \"record_id\": -2\n          }\n        }\n      ],\n      \"sub_sheet_id\": 75195982\n    }\n  }\n```\n\n**Note:**\n\n- You don’t need to include formula and code snippet column details in the above data.\n"
+                  }
+                },
+                "required" : [ "sheet_id", "data" ]
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "new record data",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "success" : {
+                      "type" : "boolean",
+                      "example" : true
+                    },
+                    "message" : {
+                      "type" : "string",
+                      "example" : "Saved successfully"
+                    },
+                    "record_id" : {
+                      "type" : "integer",
+                      "example" : 6
+                    },
+                    "record" : {
+                      "type" : "object",
+                      "properties" : {
+                        "name" : {
+                          "type" : "string",
+                          "example" : "Raj"
+                        },
+                        "email" : {
+                          "type" : "string",
+                          "example" : "Raj@gmail.com"
+                        },
+                        "age" : {
+                          "type" : "integer",
+                          "example" : 0
+                        },
+                        "record_id" : {
+                          "type" : "integer",
+                          "example" : 6
+                        },
+                        "created_at" : {
+                          "type" : "string",
+                          "example" : "2023-11-16 10:09:53"
+                        },
+                        "updated_at" : {
+                          "type" : "string",
+                          "example" : "2023-11-16 10:09:53"
+                        },
+                        "comments_count" : {
+                          "type" : "integer",
+                          "example" : 0
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
+          },
+          "401" : {
+            "description" : "Unauthorized access."
+          },
+          "500" : {
+            "description" : "Internal server error."
+          }
+        }
+      }
+    },
+    "/update-record" : {
+      "post" : {
+        "tags" : [ "/api/sheet-api" ],
+        "summary" : "updates an existing record in a sheet",
+        "security" : [ {
+          "ApiKeyAuth" : [ ]
+        } ],
+        "operationId" : "updateRecord",
+        "description" : "Facilitates the modification of an existing record within a sheet by passing sheet Id, record data and the record Id.\n",
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/x-www-form-urlencoded" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "sheet_id" : {
+                    "type" : "integer",
+                    "description" : "Id of the sheet\n\n##### Example:\n\n\n```\n70140867\n```\n",
+                    "default" : 70140867
+                  },
+                  "record_id" : {
+                    "type" : "integer",
+                    "description" : "Record Id of the sheet that you want to update\n\n##### Example:\n\n\n```\n6\n```\n",
+                    "default" : 6
+                  },
+                  "data" : {
+                    "type" : "object",
+                    "additionalProperties" : {
+                      "type" : "object",
+                      "properties" : {
+                        "value" : {
+                          "type" : "string"
+                        }
+                      }
+                    },
+                    "example" : {
+                      "240" : {
+                        "value" : "Raju"
+                      },
+                      "241" : {
+                        "value" : "Raju@gmail.com"
+                      }
+                    },
+                    "description" : "The `data` object should include the record data that you want to update. You can include the required columns which you want to update in the below format and you can send the data. \n\n##### Example:\n\nIn the below example, 240 represents a text column and 241 represents an email column. Through this example, we can update columns 240, 241 which are name and email in the sheet. \n\n```\n  {\n    \"240\": {\n      \"value\": \"Raju\"\n    },\n    \"241\": {\n      \"value\": \"Raju@gmail.com\"\n    }\n  }\n```\n\n  \n### Data for different column types\n\nPlease find the below notation to send the data to **update record** for all type of columns.\n\n- **File:** While sending the data for a file column, first you need to upload the files using our **file-upload** API. You can upload one or more files through this API. In the response, you will get the files information. **For every file in the response, you need to add filepath as uploaded_name and fullpath as path, which means `file.filepath = file.uploaded_name` and `file.fullpath = file.path`.**  You can use the modified response of this API to send the data to file column. You can update an array of files in a file column. In the below example we are sending 2 files in a stringified JSON array to the file column and you can notice that we have added filepath and fullpath at the end to each file data.\n- **Lookup:** While sending the data for a lookup column, you need to mention the record id of the value which is in the source sheet. You can mention this record id under reference_column_id. You can use **get-lookup-options** API to fetch the options of the lookup column. In the response of this API you will get the options along with the record id's. You can use that in the below format to send data for lookup column. In the below example we are sending the value as kiran along with the record of it in source sheet for lookup column (271). \n- **Subsheet:** While updating a record you can also update subsheet records. While updating the subsheet records, you need to send an array of subsheet records. You can mention the corresponding subsheet columns data for every record along with a record id as shown in below example. You can get the subsheet columns information along with sub_sheet_id through **get-sheet-columns** API. You need to mention the sub_sheet_id in the data as shown in below example.\n\n\n\n\n ```json\n  {\n    \"240\": {                    (text)\n      \"value\": \"Raju\" \n    },\n    \"241\": {                    (email)\n      \"value\": \"Raju@gmail.com\" \n    },\n    \"242\": {                    (multiline/textarea)\n      \"value\": \"Raju\\n is\\n a good boy\" \n    },\n    \"243\": {                    (phone)\n      \"value\": 8974563210 \n    },\n    \"244\": {                    (number)\n      \"value\": 66 \n    },\n    \"245\": {                    (currency)\n      \"value\": 66 \n    },\n    \"246\": {                    (percentage)\n      \"value\": 66 \n    },\n    \"247\": {                    (boolean)\n      \"value\": false \n    },\n    \"249\": {                    (date)\n      \"value\": \"12/26/2023\" \n    },\n    \"250\": {                    (date time)\n      \"value\": \"12/26/2023 10:30:00\" \n    },\n    \"251\": {                    (dropdown)          \n      \"value\": \"closed\" \n    },\n    \"252\": {                    (checkbox)\n      \"value\": \"efg, ijk\" \n    },\n    \"253\": {                    (multiselect)\n      \"value\": \"efg, ijk\" \n    },\n    \"255\": {                    (file)\n      \"value\": \"[{\\\"name\\\":\\\"image1.jpg\\\",\\\"uploaded_name\\\":\\\"742376591699564**************.jpg\\\",\\\"path\\\":\\\"http://t*********.s3.amazonaws.com/742376591699564**********.jpg\\\",\\\"size\\\":\\\"2114707\\\",\\\"status\\\":\\\"uploaded\\\",\\\"filepath\\\":\\\"742376591699564**************.jpg\\\",\\\"fullpath\\\":\\\"http://t*********.s3.amazonaws.com/742376591699564**********.jpg\\\"}, {\\\"name\\\":\\\"image2.jpg\\\",\\\"uploaded_name\\\":\\\"9874563210**************.jpg\\\",\\\"path\\\":\\\"http://t*********.s3.amazonaws.com/9874563210**********.jpg\\\",\\\"size\\\":\\\"2114809\\\",\\\"status\\\":\\\"uploaded\\\",\\\"filepath\\\":\\\"9874563210**************.jpg\\\",\\\"fullpath\\\":\\\"http://t*********.s3.amazonaws.com/9874563210**********.jpg\\\"}]\"\n    },\n    \"256\": {                    (barcode)\n      \"value\": \"pqrs\" \n    },\n    \"271\": {                    (lookup)\n      \"value\":\"{\\\"reference_column_id\\\":2,\\\"value\\\":\\\"Ravi\\\"}\" \n    },\n    \"274\": {                    (subsheet)\n      \"value\": [\n        {\n          \"273\": {              (text column inside subsheet)\n            \"value\": \"kumar reddy\", \n            \"record_id\": 1\n          },\n          \"275\": {              (email column inside subsheet)\n            \"value\": \"kumarreddy@gmail.com\",\n            \"record_id\": 1\n          }\n        },\n        {                       \n          \"273\": {              (text column inside subsheet)\n            \"value\": \"rao gopal\",\n            \"record_id\": 2\n          },\n          \"275\": {              (email column inside subsheet)\n            \"value\": \"raogopal@gmail.com\",\n            \"record_id\": 2\n          }\n        }\n      ],\n      \"sub_sheet_id\": 75195982\n    }\n  }\n```\n\n**Note:**\n\n- You don’t need to include formula and code snippet column details in the above data.\n"
+                  }
+                },
+                "required" : [ "sheet_id", "record_id", "data" ]
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "updated record data",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "success" : {
+                      "type" : "boolean",
+                      "example" : true
+                    },
+                    "message" : {
+                      "type" : "string",
+                      "example" : "Saved successfully"
+                    },
+                    "record_id" : {
+                      "type" : "integer",
+                      "example" : 6
+                    },
+                    "record" : {
+                      "type" : "object",
+                      "properties" : {
+                        "name" : {
+                          "type" : "string",
+                          "example" : "Raju"
+                        },
+                        "email" : {
+                          "type" : "string",
+                          "example" : "Raju@gmail.com"
+                        },
+                        "age" : {
+                          "type" : "integer",
+                          "example" : 0
+                        },
+                        "record_id" : {
+                          "type" : "integer",
+                          "example" : 6
+                        },
+                        "created_at" : {
+                          "type" : "string",
+                          "example" : "2023-11-16 10:09:53"
+                        },
+                        "updated_at" : {
+                          "type" : "string",
+                          "example" : "2023-11-16 11:09:53"
+                        },
+                        "comments_count" : {
+                          "type" : "integer",
+                          "example" : 0
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
+          },
+          "401" : {
+            "description" : "Unauthorized access."
+          },
+          "500" : {
+            "description" : "Internal server error."
+          }
+        }
+      }
+    },
+    "/update-multiple-records" : {
+      "post" : {
+        "tags" : [ "/api/sheet-api" ],
+        "summary" : "updates multiple records in a sheet",
+        "security" : [ {
+          "ApiKeyAuth" : [ ]
+        } ],
+        "operationId" : "updateMultipleRecords",
+        "description" : "Facilitates the modification of existing multiple records within a sheet by passing sheet Id, record data and the criteria.\n",
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/x-www-form-urlencoded" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "sheet_id" : {
+                    "type" : "integer",
+                    "description" : "Id of the sheet\n\n##### Example:\n\n\n```\n70140867\n```\n",
+                    "default" : 70140867
+                  },
+                  "criteria" : {
+                    "type" : "string",
+                    "description" : "Criteria to match the records to update.\n\n##### Notation\n\nFor every sheet, there will be a sheet Id and for every column in a sheet, there will be a column Id. Use the following notation to make the criteria:\n\n```\nsheet_{sheetId}.column_{columnId} = value\n```\n\n##### Example:\n\nIn the below example we are trying to make the criteria such that, those records which has a name as 'Raju' will get updated.\n```\nsheet_70140867.column_240 = 'Raju'\n```\n\n### Criteria for different column types\n\nBelow we have listed down some criteria conditions for text, number and date type columns.\n\n70140867 is the sheet Id\n\n240 is a text column Id.\n\n244 is a number column Id.\n\n249 is date column Id\n\n\n##### Text\n\n- **Equal to:** `sheet_70140867.column_240 = 'Raju'`\n- **Not equal to:** `sheet_70140867.column_240 <> 'Raju'`\n- **Contains:** `sheet_70140867.column_240 LIKE '%Raju%'`\n- **Does not contain:** `sheet_70140867.column_240 NOT LIKE '%Raju%'`\n- **Starts with:** `sheet_70140867.column_240 LIKE 'Raju%'`\n- **Ends with:** `sheet_70140867.column_240 LIKE '%Raju'`\n- **Is empty:** `sheet_70140867.column_240 IS EMPTY`\n- **Is not empty:** `sheet_70140867.column_240 IS NOT EMPTY`\n\n##### Number\n\n- **Equal to:** `sheet_70140867.column_244 = 20`\n- **Not equal to:** `sheet_70140867.column_244 <> 20`\n- **Greater than:** `sheet_70140867.column_244 > 20`\n- **Less than:** `sheet_70140867.column_244 < 20`\n- **Greater than or equal:** `sheet_70140867.column_244 >= 20`\n- **Less than or equal:** `sheet_70140867.column_244 <= 20`\n- **Range:** `sheet_70140867.column_244 >= 20 and sheet_70140867.column_244 <= 30`\n\n##### Date\n\n- **Equal to:** `DATE(sheet_70140867.column_249) = '2023-12-20'`\n- **Not equal to:** `DATE(sheet_70140867.column_249) <> '2023-12-20'`\n- **Greater than:** `DATE(sheet_70140867.column_249) > '2023-12-20'`\n- **Less than:** `DATE(sheet_70140867.column_249) < '2023-12-20'`\n- **Greater than or equal:** `DATE(sheet_70140867.column_249) >= '2023-12-20'`\n- **Less than or equal:** `DATE(sheet_70140867.column_249) <= '2023-12-20'`\n- **Today:** `DATE(sheet_70140867.column_249) = CURDATE()`\n- **Tomorrow:** `DATE(sheet_70140867.column_249) = DATE_ADD(CURDATE(),INTERVAL 1 DAY)`\n- **Yesterday:** `DATE(sheet_70140867.column_249) = DATE_SUB(CURDATE() , INTERVAL 1 DAY)`\n- **Last seven days:** `(DATE(sheet_70140867.column_249) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY) AND DATE(sheet_70140867.column_249) <= CURDATE())`\n- **This month:** `(MONTH(sheet_70140867.column_249) = MONTH(CURDATE()) AND   YEAR(sheet_70140867.column_249) = YEAR(CURDATE()))`\n- **This year:** `YEAR(sheet_70140867.column_249) = YEAR(CURDATE())`\n- **This quarter:** `(QUARTER(sheet_70140867.column_249) = QUARTER(CURDATE()) AND YEAR(sheet_70140867.column_249) = YEAR(CURDATE()))`\n- **In the past:** `sheet_70140867.column_249 < NOW()`\n- **In the future:** `sheet_70140867.column_249 > NOW()`\n",
+                    "default" : "sheet_70140867.column_240 ='Raju'"
+                  },
+                  "data" : {
+                    "type" : "object",
+                    "additionalProperties" : {
+                      "type" : "object",
+                      "properties" : {
+                        "value" : {
+                          "type" : "string"
+                        }
+                      }
+                    },
+                    "example" : {
+                      "243" : {
+                        "value" : "7896541230"
+                      },
+                      "244" : {
+                        "value" : "25"
+                      }
+                    },
+                    "description" : "The `data` object should include the record data that you want to update. You can include the required columns which you want to update in the below format and you can send the data. \n\n##### Example:\n\nIn the below example, 243 represents a phone column and 244 represents an number column. Through this example, we can update columns 243, 244 which are mobile no and age in the sheet. \n\n```\n  {\n    \"243\": {\n      \"value\": \"7896541230\"\n    },\n    \"244\": {\n      \"value\": 25\n    }\n  }\n```\n\n  \n### Data for different column types\n\nPlease find the below notation to send the data to **update multiple records** for all type of columns.\n\n- **File:** While sending the data for a file column, first you need to upload the files using our **file-upload** API. You can upload one or more files through this API. In the response, you will get the files information. **For every file in the response, you need to add filepath as uploaded_name and fullpath as path, which means `file.filepath = file.uploaded_name` and `file.fullpath = file.path`.**  You can use the modified response of this API to send the data to file column. You can update an array of files in a file column. In the below example we are sending 2 files in a stringified JSON array to the file column and you can notice that we have added filepath and fullpath at the end to each file data.\n- **Lookup:** While sending the data for a lookup column, you need to mention the record id of the value which is in the source sheet. You can mention this record id under reference_column_id. You can use **get-lookup-options** API to fetch the options of the lookup column. In the response of this API you will get the options along with the record id's. You can use that in the below format to send data for lookup column. In the below example we are sending the value as kiran along with the record of it in source sheet for lookup column (271).\n\n\n\n\n ```json\n  {\n    \"240\": {                    (text)\n      \"value\": \"Raju\" \n    },\n    \"241\": {                    (email)\n      \"value\": \"Raju@gmail.com\" \n    },\n    \"242\": {                    (multiline/textarea)\n      \"value\": \"Raju\\n is\\n a good boy\" \n    },\n    \"243\": {                    (phone)\n      \"value\": 8974563210 \n    },\n    \"244\": {                    (number)\n      \"value\": 66 \n    },\n    \"245\": {                    (currency)\n      \"value\": 66 \n    },\n    \"246\": {                    (percentage)\n      \"value\": 66 \n    },\n    \"247\": {                    (boolean)\n      \"value\": false \n    },\n    \"249\": {                    (date)\n      \"value\": \"12/26/2023\" \n    },\n    \"250\": {                    (date time)\n      \"value\": \"12/26/2023 10:30:00\" \n    },\n    \"251\": {                    (dropdown)          \n      \"value\": \"closed\" \n    },\n    \"252\": {                    (checkbox)\n      \"value\": \"efg, ijk\" \n    },\n    \"253\": {                    (multiselect)\n      \"value\": \"efg, ijk\" \n    },\n    \"255\": {                    (file)\n      \"value\": \"[{\\\"name\\\":\\\"image1.jpg\\\",\\\"uploaded_name\\\":\\\"742376591699564**************.jpg\\\",\\\"path\\\":\\\"http://t*********.s3.amazonaws.com/742376591699564**********.jpg\\\",\\\"size\\\":\\\"2114707\\\",\\\"status\\\":\\\"uploaded\\\",\\\"filepath\\\":\\\"742376591699564**************.jpg\\\",\\\"fullpath\\\":\\\"http://t*********.s3.amazonaws.com/742376591699564**********.jpg\\\"}, {\\\"name\\\":\\\"image2.jpg\\\",\\\"uploaded_name\\\":\\\"9874563210**************.jpg\\\",\\\"path\\\":\\\"http://t*********.s3.amazonaws.com/9874563210**********.jpg\\\",\\\"size\\\":\\\"2114809\\\",\\\"status\\\":\\\"uploaded\\\",\\\"filepath\\\":\\\"9874563210**************.jpg\\\",\\\"fullpath\\\":\\\"http://t*********.s3.amazonaws.com/9874563210**********.jpg\\\"}]\"\n    },\n    \"256\": {                    (barcode)\n      \"value\": \"pqrs\" \n    },\n    \"271\": {                    (lookup)\n      \"value\":\"{\\\"reference_column_id\\\":2,\\\"value\\\":\\\"Ravi\\\"}\" \n    }\n  }\n```\n\n**Note:**\n\n- You don’t need to include formula and code snippet column details in the above data.\n- We cannot update subsheet records while updating multiple records as there will be different subsheet record id's will be there in every record.\n"
+                  }
+                },
+                "required" : [ "sheet_id", "criteria", "data" ]
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "updated records data",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "success" : {
+                      "type" : "boolean",
+                      "example" : true
+                    },
+                    "message" : {
+                      "type" : "string",
+                      "example" : "Saved successfully"
+                    },
+                    "records_modified" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "record_id" : {
+                            "type" : "integer",
+                            "example" : 6
+                          },
+                          "record" : {
+                            "type" : "object",
+                            "properties" : {
+                              "name" : {
+                                "type" : "string",
+                                "example" : "Raju"
+                              },
+                              "email" : {
+                                "type" : "string",
+                                "example" : "Raju@gmail.com"
+                              },
+                              "mobile no" : {
+                                "type" : "string",
+                                "example" : 7896541230
+                              },
+                              "age" : {
+                                "type" : "integer",
+                                "example" : 25
+                              },
+                              "record_id" : {
+                                "type" : "integer",
+                                "example" : 6
+                              },
+                              "created_at" : {
+                                "type" : "string",
+                                "example" : "2023-11-16 10:09:53"
+                              },
+                              "updated_at" : {
+                                "type" : "string",
+                                "example" : "2023-11-16 12:09:53"
+                              },
+                              "comments_count" : {
+                                "type" : "integer",
+                                "example" : 0
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
+          },
+          "401" : {
+            "description" : "Unauthorized access."
+          },
+          "500" : {
+            "description" : "Internal server error."
+          }
+        }
+      }
+    },
+    "/delete-records" : {
+      "post" : {
+        "tags" : [ "/api/sheet-api" ],
+        "summary" : "deletes one more records in a sheet",
+        "security" : [ {
+          "ApiKeyAuth" : [ ]
+        } ],
+        "operationId" : "deleteRecords",
+        "description" : "Allows to delete one or more records in a sheet or in a subsheet. When you delete records in a sheet, you need to mention sheet Id and record id's. When you delete records in a subsheet, you need to mention sheet Id as the subsheet Id and record id's in the subsheet along with parent_sheet_id, parent_record_id and parent_column_id.\n",
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "multipart/form-data" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "sheet_id" : {
+                    "type" : "integer",
+                    "description" : "Id of the sheet\n\n##### Example:\n\n\n```\n70140867\n```\n",
+                    "default" : 70140867
+                  },
+                  "delete_record_ids" : {
+                    "type" : "string",
+                    "description" : "comma separated record id's that you want to delete.\n\n##### Example 1:\n\n\n```\n7, 8\n```\n\n##### Example 2:\n\n\n```\n9\n```\n",
+                    "default" : 9
+                  },
+                  "parent_sheet_id" : {
+                    "type" : "string",
+                    "description" : "Id of the parent sheet while deleting a record in a subsheet.\n\n##### Example :\n\n\n```\n70140867\n```\n",
+                    "default" : 70140867
+                  },
+                  "parent_record_id" : {
+                    "type" : "string",
+                    "description" : "Id of the parent record while deleting a record in a subsheet.\n\n##### Example :\n\n\n```\n6\n```\n",
+                    "default" : 6
+                  },
+                  "parent_column_id" : {
+                    "type" : "string",
+                    "description" : "Id of the parent subsheet column while deleting a record in a subsheet.\n\n##### Example :\n\n\n```\n274\n```\n",
+                    "default" : 274
+                  }
+                },
+                "required" : [ "sheet_id", "delete_record_ids" ]
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "deleted records status",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "success" : {
+                      "type" : "boolean",
+                      "example" : true
+                    },
+                    "message" : {
+                      "type" : "string",
+                      "example" : "Records deleted successfully!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
+          },
+          "401" : {
+            "description" : "Unauthorized access."
+          },
+          "500" : {
+            "description" : "Internal server error."
+          }
+        }
+      }
+    },
+    "/delete-multiple-records" : {
+      "post" : {
+        "tags" : [ "/api/sheet-api" ],
+        "summary" : "deletes multiple records in a sheet using criteria",
+        "security" : [ {
+          "ApiKeyAuth" : [ ]
+        } ],
+        "operationId" : "deleteMultipleRecords",
+        "description" : "Allows to delete multiple records in a sheet or in a subsheet. When you delete records in a sheet, you need to mention sheet Id and criteria to match the records. When you delete records in a subsheet, you need to mention sheet Id as the subsheet Id and criteria to match the subsheet records in the subsheet along with parent_sheet_id, parent_record_id and parent_column_id.\n",
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "multipart/form-data" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "sheet_id" : {
+                    "type" : "integer",
+                    "description" : "Id of the sheet\n\n##### Example:\n\n\n```\n70140867\n```\n",
+                    "default" : 70140867
+                  },
+                  "criteria" : {
+                    "type" : "string",
+                    "description" : "Criteria to match the records to delete.\n\n##### Notation\n\nFor every sheet, there will be a sheet Id and for every column in a sheet there will be a columnId. Use the following notation to make the criteria:\n\n```\nsheet_{sheetId}.column_{columnId} = value\n```\n\n##### Example:\n\nIn the below example, we are trying to make the criteria such that those records which has a name as 'Raju' will get deleted.\n```\nsheet_70140867.column_240 = 'Raju'\n```\n\n### Criteria for different column types\n\nBelow we have listed down some criteria conditions for text, number and date type columns.\n\n70140867 is the sheet Id\n\n240 is a text column Id.\n\n244 is a number column Id.\n\n249 is date column Id\n\n\n##### Text\n\n- **Equal to:** `sheet_70140867.column_240 = 'Raju'`\n- **Not equal to:** `sheet_70140867.column_240 <> 'Raju'`\n- **Contains:** `sheet_70140867.column_240 LIKE '%Raju%'`\n- **Does not contain:** `sheet_70140867.column_240 NOT LIKE '%Raju%'`\n- **Starts with:** `sheet_70140867.column_240 LIKE 'Raju%'`\n- **Ends with:** `sheet_70140867.column_240 LIKE '%Raju'`\n- **Is empty:** `sheet_70140867.column_240 IS EMPTY`\n- **Is not empty:** `sheet_70140867.column_240 IS NOT EMPTY`\n\n##### Number\n\n- **Equal to:** `sheet_70140867.column_244 = 20`\n- **Not equal to:** `sheet_70140867.column_244 <> 20`\n- **Greater than:** `sheet_70140867.column_244 > 20`\n- **Less than:** `sheet_70140867.column_244 < 20`\n- **Greater than or equal:** `sheet_70140867.column_244 >= 20`\n- **Less than or equal:** `sheet_70140867.column_244 <= 20`\n- **Range:** `sheet_70140867.column_244 >= 20 and sheet_70140867.column_244 <= 30`\n\n##### Date\n\n- **Equal to:** `DATE(sheet_70140867.column_249) = '2023-12-20'`\n- **Not equal to:** `DATE(sheet_70140867.column_249) <> '2023-12-20'`\n- **Greater than:** `DATE(sheet_70140867.column_249) > '2023-12-20'`\n- **Less than:** `DATE(sheet_70140867.column_249) < '2023-12-20'`\n- **Greater than or equal:** `DATE(sheet_70140867.column_249) >= '2023-12-20'`\n- **Less than or equal:** `DATE(sheet_70140867.column_249) <= '2023-12-20'`\n- **Today:** `DATE(sheet_70140867.column_249) = CURDATE()`\n- **Tomorrow:** `DATE(sheet_70140867.column_249) = DATE_ADD(CURDATE(),INTERVAL 1 DAY)`\n- **Yesterday:** `DATE(sheet_70140867.column_249) = DATE_SUB(CURDATE() , INTERVAL 1 DAY)`\n- **Last seven days:** `(DATE(sheet_70140867.column_249) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY) AND DATE(sheet_70140867.column_249) <= CURDATE())`\n- **This month:** `(MONTH(sheet_70140867.column_249) = MONTH(CURDATE()) AND   YEAR(sheet_70140867.column_249) = YEAR(CURDATE()))`\n- **This year:** `YEAR(sheet_70140867.column_249) = YEAR(CURDATE())`\n- **This quarter:** `(QUARTER(sheet_70140867.column_249) = QUARTER(CURDATE()) AND YEAR(sheet_70140867.column_249) = YEAR(CURDATE()))`\n- **In the past:** `sheet_70140867.column_249 < NOW()`\n- **In the future:** `sheet_70140867.column_249 > NOW()`\n",
+                    "default" : "sheet_70140867.column_240 ='Raju'"
+                  },
+                  "parent_sheet_id" : {
+                    "type" : "string",
+                    "description" : "Id of the parent sheet while deleting a record in a subsheet.\n\n##### Example :\n\n\n```\n70140867\n```\n",
+                    "default" : 70140867
+                  },
+                  "parent_record_id" : {
+                    "type" : "string",
+                    "description" : "Id of the parent record while deleting a record in a subsheet.\n\n##### Example :\n\n\n```\n6\n```\n",
+                    "default" : 6
+                  },
+                  "parent_column_id" : {
+                    "type" : "string",
+                    "description" : "Id of the parent subsheet column while deleting a record in a subsheet.\n\n##### Example :\n\n\n```\n274\n```\n",
+                    "default" : 274
+                  }
+                },
+                "required" : [ "sheet_id", "criteria" ]
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "deleted records status",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "success" : {
+                      "type" : "boolean",
+                      "example" : true
+                    },
+                    "message" : {
+                      "type" : "string",
+                      "example" : "Records deleted successfully!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
+          },
+          "401" : {
+            "description" : "Unauthorized access."
+          },
+          "500" : {
+            "description" : "Internal server error."
+          }
+        }
+      }
+    },
+    "/update-cell" : {
+      "post" : {
+        "tags" : [ "/api/sheet-api" ],
+        "summary" : "modifies a cell in a sheet",
+        "security" : [ {
+          "ApiKeyAuth" : [ ]
+        } ],
+        "operationId" : "editCell",
+        "description" : "Allows to edit a cell in a sheet or in a subsheet by passing sheet id, record id, column id and value. You can also create new records in a subsheet using this endpoint.\n\n **1. To edit a cell in a sheet**\n \n While editing a cell in a sheet, you need to send sheet id, record id, column id and the new value. Please find the below example payload to send in the request body.\n \n ```\n  sheet_id   -   70140867\n  record_id  -   12\n  column_id  -   241              (email type)\n  value      -   Ravikishore@gmail.com\n  ```\n  \n  **2. To edit a cell in a subsheet**\n \n While editing a cell in a subsheet, you need to send sheet id as subsheet id, record id of the subsheet, column id which is inside the subsheet and the value to update cell. Along with these, you need to include parent_sheet_id, parent_record_id, parent_column_id. Please find the below example payload to send in the request body.\n \n ```\n  sheet_id        -   75195982     (subsheet id)\n  record_id       -   20\n  column_id       -   277          (phone type)\n  value           -   9087654321\n  parent_sheet_id -   70140867      (sheet id)\n  parent_record_id -  6\n  parent_column_id -  274           (subsheet column id in main sheet)\n  \n  ```\n  \n  **3. To create a new record in a subsheet**\n \n While creating a new record in a subsheet, you need to send sheet id as subsheet id and the value will include the JSON data representing the new record data of subsheet. This is similar to the data key that we use in create-record endpoint. Along with these, you need to include parent_sheet_id, parent_record_id, parent_column_id. Please find the below example payload to send in the request body. In the below example, we kept the record_id and column_id as empty as they are not necessary. But while sending the data for value key, you have to include JSON data represeenting new record data of subsheet.\n \n ```\n  sheet_id        -   75195982     (subsheet id)\n  record_id       -   \n  column_id       -                 \n  value           -   {\"277\": {\"value\": \"7896541230\"}}\n  parent_sheet_id -   70140867      (sheet id)\n  parent_record_id -  6\n  parent_column_id -  274           (subsheet column id in main sheet)\n  \n  ```\n",
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "multipart/form-data" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "sheet_id" : {
+                    "type" : "integer",
+                    "description" : "Id of the sheet\n\n##### Example:\n\n\n```\n70140867\n```\n",
+                    "default" : 70140867
+                  },
+                  "record_id" : {
+                    "type" : "string",
+                    "description" : "Id of the record\n\n##### Example:\n\n\n```\n12\n```\n",
+                    "default" : 12
+                  },
+                  "column_id" : {
+                    "type" : "string",
+                    "description" : "Id of the column that we want to update.\n\n##### Example:\n\n\n```\n241\n```\n",
+                    "default" : 241
+                  },
+                  "value" : {
+                    "type" : "string",
+                    "description" : "value of the cell\n\n##### Example:\n\n\n```\nRavikishore@gmail.com\n```\n",
+                    "default" : "Ravikishore@gmail.com"
+                  },
+                  "parent_sheet_id" : {
+                    "type" : "string",
+                    "description" : "Id of the parent sheet while editing a cell in a subsheet.\n\n##### Example :\n\n\n```\n70140867\n```\n",
+                    "default" : 70140867
+                  },
+                  "parent_record_id" : {
+                    "type" : "string",
+                    "description" : "Id of the parent record while editing a cell in a subsheet.\n\n##### Example :\n\n\n```\n6\n```\n",
+                    "default" : 6
+                  },
+                  "parent_column_id" : {
+                    "type" : "string",
+                    "description" : "Id of the parent subsheet column while editing a cell in a subsheet.\n\n##### Example :\n\n\n```\n274\n```\n",
+                    "default" : 274
+                  }
+                },
+                "required" : [ "sheet_id", "record_id", "column_id", "value" ]
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Record data",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "success" : {
+                      "type" : "boolean",
+                      "example" : true
+                    },
+                    "message" : {
+                      "type" : "string",
+                      "example" : "Saved successfully"
+                    },
+                    "data" : {
+                      "type" : "object",
+                      "properties" : {
+                        "name" : {
+                          "type" : "string",
+                          "example" : "Ravi kishore"
+                        },
+                        "email" : {
+                          "type" : "string",
+                          "example" : "Ravikishore@gmail.com"
+                        },
+                        "age" : {
+                          "type" : "string",
+                          "example" : 28
+                        },
+                        "record_id" : {
+                          "type" : "integer",
+                          "example" : 12
+                        },
+                        "created_at" : {
+                          "type" : "string",
+                          "example" : "2023-11-16 10:09:53"
+                        },
+                        "updated_at" : {
+                          "type" : "string",
+                          "example" : "2023-11-16 12:09:53"
+                        },
+                        "comments_count" : {
+                          "type" : "integer",
+                          "example" : 0
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
+          },
+          "401" : {
+            "description" : "Unauthorized access."
+          },
+          "500" : {
+            "description" : "Internal server error."
+          }
+        }
+      }
+    },
+    "/get-sheet-columns" : {
+      "post" : {
+        "tags" : [ "/api/sheet-api" ],
+        "summary" : "fetches all columns data in a sheet along with subsheet columns.",
+        "security" : [ {
+          "ApiKeyAuth" : [ ]
+        } ],
+        "operationId" : "getColumns",
+        "description" : "This will provide the columns in a sheet and the corresponding subsheet columns in it.\n",
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "multipart/form-data" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "sheet_id" : {
+                    "type" : "integer",
+                    "description" : "Id of the sheet\n\n##### Example:\n\n\n```\n70140867\n```\n",
+                    "default" : 70140867
+                  }
+                },
+                "required" : [ "sheet_id" ]
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "records data",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "success" : {
+                      "type" : "boolean",
+                      "example" : true
+                    },
+                    "data" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "column_id" : {
+                            "type" : "integer",
+                            "example" : 240
+                          },
+                          "name" : {
+                            "type" : "string",
+                            "example" : "name"
+                          },
+                          "column_type_id" : {
+                            "type" : "integer",
+                            "example" : 1
+                          },
+                          "column_type" : {
+                            "type" : "string",
+                            "example" : "Text"
+                          },
+                          "options" : {
+                            "type" : "string",
+                            "example" : "[{\"max_length\":100,\"min_length\":0,\"is_read_only\":false,\"is_mandatory\":false,\"is_unique\":false,\"unique_options\":null,\"is_filter\":false}]"
+                          },
+                          "sheet_id" : {
+                            "type" : "integer",
+                            "example" : 70140867
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
+          },
+          "401" : {
+            "description" : "Unauthorized access."
+          },
+          "500" : {
+            "description" : "Internal server error."
+          }
+        }
+      }
+    },
+    "/file-upload" : {
+      "post" : {
+        "tags" : [ "/api/sheet-api" ],
+        "summary" : "Uploads a file",
+        "security" : [ {
+          "ApiKeyAuth" : [ ]
+        } ],
+        "operationId" : "fileUpload",
+        "description" : "Allows to upload a files to our s3 bucket to store the files. You need to use this when you want to insert any file data into the tigersheet record. You can upload one or more files through this API. In the response, you will get the files information. **For every file in the response, you need to add filepath as uploaded_name and fullpath as path, which means `file.filepath = file.uploaded_name` and `file.fullpath = file.path`.**  You can use the modified response of this API to send the data to file column. You can insert an array of files in a file column.\n",
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "multipart/form-data" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "Filedata[]" : {
+                    "type" : "integer",
+                    "description" : "select and attach the files that you want to upload\n"
+                  }
+                },
+                "required" : [ "Filedata[]" ]
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "upload status",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "success" : {
+                      "type" : "boolean",
+                      "example" : true
+                    },
+                    "files" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "name" : {
+                            "type" : "string",
+                            "example" : "IMG_20191126_112442.jpg"
+                          },
+                          "uploaded_name" : {
+                            "type" : "string",
+                            "example" : "742376591699564**************.jpg"
+                          },
+                          "path" : {
+                            "type" : "string",
+                            "example" : "http://t*******.s3.amazonaws.com/742376591699564**********.jpg"
+                          },
+                          "size" : {
+                            "type" : "integer",
+                            "example" : 2114707
+                          },
+                          "status" : {
+                            "type" : "string",
+                            "example" : "uploaded"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get-lookup-options" : {
+      "post" : {
+        "tags" : [ "/api/sheet-api" ],
+        "summary" : "Fetches lookup options of a lookup column",
+        "security" : [ {
+          "ApiKeyAuth" : [ ]
+        } ],
+        "operationId" : "getLookupOptions",
+        "description" : "Allows to fetch the lookup options of a lookup column in a sheet. While creating a record with lookup columns or while updating a lookup column you need to send the lookup value along with reference_column_id. You can get all the options of a lookup column through this endpoint. In the response of this API you will get the lookup options along with the record id's. You can use them to update a lookup column cell or while creating a record with a lookup column.\n",
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "multipart/form-data" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "sheet_id" : {
+                    "type" : "integer",
+                    "description" : "Id of the sheet\n\n##### Example:\n\n\n```\n70140867\n```\n",
+                    "default" : 70140867
+                  },
+                  "column_id" : {
+                    "type" : "integer",
+                    "description" : "Id of the lookup column\n\n##### Example:\n\n\n```\n271\n```\n",
+                    "default" : 271
+                  },
+                  "record_id" : {
+                    "type" : "integer",
+                    "description" : "Id of the parent record\n\nWhen you have any condition for a lookup column, you need to mention the record id for which you are fetching the lookup options.\n\n##### Example:\n\n\n```\n6\n```\n",
+                    "default" : 6
+                  },
+                  "subsheet_column_id" : {
+                    "type" : "integer",
+                    "description" : "Id of the parent subsheet column when we are fetching the options of the lookup column which is inside a subsheet.\n\nWhen you have any condition for a lookup column, you need to mention the subsheet_column_id.\n\n\n##### Example:\n\n\n```\n274\n```\n",
+                    "default" : 274
+                  },
+                  "subsheet_record_id" : {
+                    "type" : "integer",
+                    "description" : "Id of the subsheet record when we are fetching the options of the lookup column which is inside a subsheet.\n\nWhen you have any condition for a lookup column, you need to mention the subsheet_record_id for which you are fetching the lookup options.\n\n\n##### Example:\n\n\n```\n60\n```\n",
+                    "default" : 60
+                  }
+                },
+                "required" : [ "sheet_id", "column_id" ]
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Please find the response of lookup options below.\n\nIn the below example, column_269 represent the source column that we have selected while creating a lookup column.\n",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "success" : {
+                      "type" : "boolean",
+                      "example" : true
+                    },
+                    "data" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "reference_column_id" : {
+                            "type" : "integer",
+                            "example" : 1
+                          },
+                          "column_269" : {
+                            "type" : "string",
+                            "example" : "kiran"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "securitySchemes" : {
+      "ApiKeyAuth" : {
+        "type" : "apiKey",
+        "in" : "header",
+        "name" : "Authorization"
+      }
+    }
+  }
+}
